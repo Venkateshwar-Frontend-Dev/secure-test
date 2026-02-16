@@ -156,13 +156,6 @@ export async function finalizeSubmission() {
 }
 
 // -------------------------------
-// Online Recovery
-// -------------------------------
-window.addEventListener("online", () => {
-  flushLogs();
-});
-
-// -------------------------------
 // Debug Helper
 // -------------------------------
 export function getLogs() {
