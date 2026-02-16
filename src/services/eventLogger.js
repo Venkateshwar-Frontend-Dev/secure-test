@@ -35,17 +35,11 @@ function saveAttempt(id) {
   localStorage.setItem(ATTEMPT_KEY, id);
 }
 
-function loadAttempt() {
-  return localStorage.getItem(ATTEMPT_KEY);
-}
-
 // -------------------------------
 // Init Logger (CALL BEFORE RENDER)
 // -------------------------------
 export function initLogger(id) {
-  const existingAttempt = loadAttempt();
-
-  attemptId = existingAttempt || id;
+  attemptId = id;
   saveAttempt(attemptId);
 
   isFinalized = false;
@@ -122,20 +116,18 @@ export async function flushLogs() {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(logsToSend),
     });
-  
+
     if (!res.ok) {
       console.error("Log upload failed:", res.status);
       return;
     }
-  
+
     // Remove only sent logs
     eventQueue = eventQueue.slice(logsToSend.length);
     saveLogs();
-  
   } catch (error) {
     console.warn("Network error. Logs preserved locally.");
   }
-  
 }
 
 // -------------------------------
